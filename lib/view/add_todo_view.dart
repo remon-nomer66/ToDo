@@ -1,6 +1,8 @@
+// lib/view/add_todo_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../view_models/todo_view_model.dart';
+import '../provider/todo_provider.dart';
+import '../view_model/todo_view_model.dart';
 
 class AddTodoView extends ConsumerWidget {
   final TextEditingController _controller = TextEditingController();
@@ -24,7 +26,7 @@ class AddTodoView extends ConsumerWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                ref.read(todoProvider.notifier).addTodo(_controller.text);
+                ref.read(todoProvider.notifier).addTodo(_controller.text);  // ここがエラーの箇所
                 Navigator.pop(context);
               },
               child: const Text('Add'),

@@ -1,6 +1,6 @@
-// lib/view_models/todo_view_model.dart
+// lib/view_model/todo_view_model.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/todo.dart';
+import '../model/todo.dart';
 
 class TodoViewModel extends StateNotifier<List<Todo>> {
   TodoViewModel() : super([]);
@@ -18,5 +18,3 @@ class TodoViewModel extends StateNotifier<List<Todo>> {
     state = state.where((todo) => state.indexOf(todo) != index).toList();
   }
 }
-
-final todoProvider = StateNotifierProvider<TodoViewModel, List<Todo>>((ref) => TodoViewModel());

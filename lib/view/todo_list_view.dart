@@ -1,7 +1,8 @@
+// lib/view/todo_list_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../view_models/todo_view_model.dart';
-import 'add_todo_view.dart';
+import '../component/todo_tile.dart';
+import '../provider/todo_provider.dart';
 
 class TodoListView extends ConsumerWidget {
   const TodoListView({super.key});
@@ -14,35 +15,22 @@ class TodoListView extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('ToDo List'),
       ),
-      body: ListView.builder(
-        itemCount: todos.length,
-        itemBuilder: (context, index) {
-          final todo = todos[index];
-          return ListTile(
-            title: Text(
-              todo.title,
-              style: TextStyle(
-                decoration: todo.isDone ? TextDecoration.lineThrough : null,
-              ),
-            ),
-            trailing: Checkbox(
-              value: todo.isDone,
-              onChanged: (_) {
-                ref.read(todoProvider.notifier).toggleTodoStatus(index);
-              },
-            ),
-            onLongPress: () {
-              ref.read(todoProvider.notifier).removeTodo(index);
-            },
-          );
+      body: GestureDetector(
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity! < 0) {
+            Navigator.pushNamed(context, '/summary');
+          }
         },
+        child: ListView.builder(
+          itemCount: todos.length,
+          itemBuilder: (context, index) {
+            return TodoTile(todo: todos[index]);
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddTodoView()),
-          );
+          Navigator.pushNamed(context, '/add');
         },
         child: const Icon(Icons.add),
       ),
