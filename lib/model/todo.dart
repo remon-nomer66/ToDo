@@ -1,4 +1,4 @@
-// lib/models/todo.dart
+// lib/model/todo.dart
 class Todo {
   String title;
   bool isDone;
